@@ -4,18 +4,25 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using NinjectWebApi.Infrastructure;
+using NinjectWebApi.Models;
 
 namespace NinjectWebApi.Controllers
 {
-    public class ValuesController : ApiController
+    public class UserController : ApiController
     {
-        // GET api/values
-        public IEnumerable<string> Get()
+        private readonly IUserRepository _userRepository;
+
+        public UserController(IUserRepository userRepository)
         {
-            return new string[] { "value1", "value2" };
+            _userRepository = userRepository;
         }
 
-        // GET api/values/5
+        public IEnumerable<User> Get()
+        {
+            return _userRepository.GetUsers();
+        }
+
         public string Get(int id)
         {
             return "value";
